@@ -6,6 +6,7 @@
   "About": "Начинал с веб-дизайна и интерфейсов, затем перешёл к серверной логике, базам данных и API. Работал системным администратором и инженером L1–L2: писал на Python и Bash утилиты мониторинга, разворачивал сервисы в Docker, воспроизводил дефекты вместе с разработкой и проверял релизы. Сейчас делаю акцент на fullstack-разработке: хочу строить продукты целиком, от интерфейса и API до деплоя и наблюдаемости.",
   "Links": [
     {"Label": "GitHub", "URL": "https://github.com/balistica"},
+    {"Label": "TG", "URL": "https://t.me/wewassup"},
     {"Label": "Резюме на hh.ru", "URL": "https://spb.hh.ru/resume/8d489afcff115e38240039ed1f68784e346376?hhtmFrom=profile"},
     {"Label": "mazzask@proton.me", "URL": "mailto:mazzask@proton.me"}
   ],
