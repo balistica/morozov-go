@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>{{.Name}} — {{.Role}}</title>
+<meta name="description" content="{{.Tagline}}">
+<meta property="og:title" content="{{.Name}} — {{.Role}}">
+<meta property="og:description" content="{{.Tagline}}">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%232340E8'/%3E%3Ctext x='16' y='23' font-size='20' text-anchor='middle' fill='%23FFD84D' font-family='Georgia'%3E{}%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="wrap">
+<header>
+  <strong>{{.Name}}</strong>
+  <nav aria-label="Разделы"><a href="#skills">Навыки</a><a href="#cases">Кейсы</a><a href="#work">Путь</a><a href="#projects">Проекты</a><a href="#devops">DevOps</a></nav>
+  <button id="theme" type="button" aria-label="Сменить тему">Тема</button>
+</header>
+
+<main>
+<div class="hero">
+  <h1>{{.Role}}, который <mark>доводит до прода</mark></h1>
+  <p class="lead">{{.Tagline}}</p>
+  <p class="links">{{range .Links}}<a href="{{.URL}}">{{.Label}}</a>{{end}}</p>
+  <div class="stats">{{range .Stats}}<div><b>{{.Value}}</b><span>{{.Label}}</span></div>{{end}}</div>
+</div>
+
+<section><h2>Обо мне</h2><p class="about">{{.About}}</p>{{if .Location}}<p class="note">{{.Location}}</p>{{end}}</section>
+
+<section id="skills"><h2>Навыки</h2>
+{{range .Skills}}<div class="sk"><div><h3>{{.Group}}</h3><small>{{.Note}}</small></div>
+<ul>{{range .Items}}<li><span>{{.Name}}</span><span class="dots" role="img" aria-label="уровень {{.Level}} из 5">{{if ge .Level 1}}<i class="on"></i>{{end}}{{if ge .Level 2}}<i class="on"></i>{{else}}<i></i>{{end}}{{if ge .Level 3}}<i class="on"></i>{{else}}<i></i>{{end}}{{if ge .Level 4}}<i class="on"></i>{{else}}<i></i>{{end}}{{if ge .Level 5}}<i class="on"></i>{{else}}<i></i>{{end}}</span></li>{{end}}</ul></div>{{end}}
+</section>
+
+<section id="cases"><h2>Технические кейсы</h2>
+{{range .Cases}}<article class="case"><h3>{{.Title}}</h3><p class="prob">{{.Problem}}</p>
+<div class="cols"><div><h4>Решение</h4><ul>{{range .Solution}}<li>{{.}}</li>{{end}}</ul></div>
+<div><h4>Результат</h4><p>{{.Result}}</p>{{if .Metrics}}<div class="mets">{{range .Metrics}}<div><b>{{.Value}}</b><span>{{.Label}}</span></div>{{end}}</div>{{end}}</div></div></article>{{end}}
+</section>
+
+<section id="work"><h2>Профессиональный путь</h2>
+{{range .Experience}}<div class="job"><time>{{.Period}}</time><div><h3>{{.Role}}{{if .Company}}, {{.Company}}{{end}}</h3><ul>{{range .Bullets}}<li>{{.}}</li>{{end}}</ul></div></div>{{end}}
+</section>
+
+{{if .Projects}}<section id="projects"><h2>Проекты</h2>
+{{range .Projects}}<a class="proj" href="{{.URL}}"><h3>{{.Name}}</h3><p>{{.Desc}}</p><div class="tags">{{range .Stack}}<span>{{.}}</span>{{end}}</div></a>{{end}}
+</section>{{end}}
+
+<section><h2>Как я работаю</h2><div class="str">{{range .Strengths}}<div><h3>{{.Title}}</h3><p>{{.Text}}</p></div>{{end}}</div></section>
+
+<section id="devops"><h2>Этот сайт — тоже проект</h2>
+<div class="pipeline">
+  <div class="stage ok"><code>go vet</code><p>статический анализ</p></div>
+  <div class="stage ok"><code>go test -race</code><p>тесты генератора и валидации данных</p></div>
+  <div class="stage ok"><code>go run .</code><p>Go собирает HTML из data.json</p></div>
+  <div class="stage ok"><code>deploy-pages</code><p>публикация в GitHub Pages</p></div>
+</div>
+<p class="note">Сайт генерирует программа на Go (только стандартная библиотека). Любой пуш в main проходит CI/CD и выкатывается сам. Содержимое лежит в одном JSON-файле, вёрстка не дублируется.</p>
+</section>
+</main>
+
+<footer>Собрано {{.Built}} · Go + GitHub Actions</footer>
+</div>
+<script src="app.js"></script>
+</body>
+</html>
