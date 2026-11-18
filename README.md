@@ -1,1 +1,1 @@
-Доступно по ссылке:  https://github.com/balistica/morozov-go
+Доступно по ссылке:  https://balistica.github.io/morozov-go
