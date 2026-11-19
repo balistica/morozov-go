@@ -3,65 +3,313 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>{{.Name}} — {{.Role}}</title>
-<meta name="description" content="{{.Tagline}}">
-<meta property="og:title" content="{{.Name}} — {{.Role}}">
-<meta property="og:description" content="{{.Tagline}}">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%232340E8'/%3E%3Ctext x='16' y='23' font-size='20' text-anchor='middle' fill='%23FFD84D' font-family='Georgia'%3E{}%3C/text%3E%3C/svg%3E">
+<title>{{ .Name }} — {{ .Role }}</title>
+<meta name="description" content="{{ .Tagline }}">
+<meta property="og:title" content="{{ .Name }} — {{ .Role }}">
+<meta property="og:description" content="{{ .Tagline }}">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23090b09'/%3E%3Ctext x='16' y='23' font-size='15' text-anchor='middle' fill='%23d3fb5c' font-family='monospace'%3EДМ%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<div class="wrap">
-<header>
-  <strong>{{.Name}}</strong>
-  <nav aria-label="Разделы"><a href="#skills">Навыки</a><a href="#cases">Кейсы</a><a href="#work">Путь</a><a href="#projects">Проекты</a><a href="#devops">DevOps</a></nav>
-  <button id="theme" type="button" aria-label="Сменить тему">Тема</button>
+<div class="grain" aria-hidden="true"></div>
+<div class="scanlines" aria-hidden="true"></div>
+<div class="cursor" data-cursor></div>
+<div class="cursor-ring" data-cursor-ring></div>
+<div class="progress"><span data-progress></span></div>
+
+<div class="loader" data-loader>
+  <div class="loader-inner">
+    <div class="loader-mark">ДМ</div>
+    <div class="loader-bar"><i></i></div>
+    <div class="loader-meta"><span>Инициализация системы</span><span data-percent>0%</span></div>
+  </div>
+</div>
+
+<header class="site-head">
+  <div class="shell head-inner">
+    <a class="identity" href="#top">
+      <span class="identity-mark">ДМ</span>
+      <span class="identity-text">{{ .Name }}<br><em>{{ .Role }}</em></span>
+    </a>
+    <nav class="head-nav">
+      <a href="#skills">Навыки</a>
+      <a href="#cases">Кейсы</a>
+      <a href="#work">Опыт</a>
+      <a href="#projects">Проекты</a>
+      <a href="#devops">DevOps</a>
+    </nav>
+    <div class="head-side">
+      <span class="status"><i></i>Open to work</span>
+      <button id="theme" class="theme-button" type="button" aria-label="Переключить тему">Aa</button>
+    </div>
+  </div>
 </header>
 
-<main>
-<div class="hero">
-  <h1>{{.Role}}, который <mark>доводит до прода</mark></h1>
-  <p class="lead">{{.Tagline}}</p>
-  <p class="links">{{range .Links}}<a href="{{.URL}}">{{.Label}}</a>{{end}}</p>
-  <div class="stats">{{range .Stats}}<div><b>{{.Value}}</b><span>{{.Label}}</span></div>{{end}}</div>
-</div>
+<main id="top">
+  <section class="hero">
+    <canvas class="field" data-field></canvas>
+    <div class="shell hero-inner">
+      <p class="kicker reveal">Fullstack Engineer · Production Systems</p>
+      <h1 class="display">
+        <span class="line"><span>{{ .Role }}</span></span>
+        <span class="line"><span>от интерфейса</span></span>
+        <span class="line"><span>до <i>инфраструктуры</i></span></span>
+      </h1>
+      <p class="lead reveal">{{ .Tagline }}</p>
 
-<section><h2>Обо мне</h2><p class="about">{{.About}}</p>{{if .Location}}<p class="note">{{.Location}}</p>{{end}}</section>
+      <div class="hero-actions reveal">
+        {{ range .Links }}<a class="primary-button" href="{{ .URL }}"><span>{{ .Label }}</span></a>{{ end }}
+      </div>
 
-<section id="skills"><h2>Навыки</h2>
-{{range .Skills}}<div class="sk"><div><h3>{{.Group}}</h3><small>{{.Note}}</small></div>
-<ul>{{range .Items}}<li><span>{{.Name}}</span><span class="dots" role="img" aria-label="уровень {{.Level}} из 5">{{if ge .Level 1}}<i class="on"></i>{{end}}{{if ge .Level 2}}<i class="on"></i>{{else}}<i></i>{{end}}{{if ge .Level 3}}<i class="on"></i>{{else}}<i></i>{{end}}{{if ge .Level 4}}<i class="on"></i>{{else}}<i></i>{{end}}{{if ge .Level 5}}<i class="on"></i>{{else}}<i></i>{{end}}</span></li>{{end}}</ul></div>{{end}}
-</section>
+      <div class="hero-orbit" aria-hidden="true">
+        <div class="orbit orbit-1"></div>
+        <div class="orbit orbit-2"></div>
+        <div class="orbit orbit-3"></div>
+        <div class="hero-object" data-parallax="0.14">
+          <div class="glass-panel panel-main">
+            <div class="panel-top"><span>System status</span><span>Live</span></div>
+            <div class="panel-title">Engineering<br><i>in motion</i></div>
+            <div class="panel-bars"><i></i><i></i><i></i><i></i></div>
+            <div class="panel-foot"><span>Backend</span><span>Frontend</span><span>QA</span><span>DevOps</span></div>
+          </div>
+          <div class="glass-panel panel-a" data-float="1">
+            <span>Tests</span><strong>40</strong><em>+</em>
+          </div>
+          <div class="glass-panel panel-b" data-float="2">
+            <span>Cache hit</span><strong>87</strong><em>%</em>
+          </div>
+          <div class="glass-panel panel-c" data-float="3">
+            <span>Response</span><strong>80</strong><em>ms</em>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-<section id="cases"><h2>Технические кейсы</h2>
-{{range .Cases}}<article class="case"><h3>{{.Title}}</h3><p class="prob">{{.Problem}}</p>
-<div class="cols"><div><h4>Решение</h4><ul>{{range .Solution}}<li>{{.}}</li>{{end}}</ul></div>
-<div><h4>Результат</h4><p>{{.Result}}</p>{{if .Metrics}}<div class="mets">{{range .Metrics}}<div><b>{{.Value}}</b><span>{{.Label}}</span></div>{{end}}</div>{{end}}</div></div></article>{{end}}
-</section>
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee-track">
+      <span>Go</span><i>◆</i><span>Laravel</span><i>◆</i><span>React</span><i>◆</i><span>PostgreSQL</span><i>◆</i><span>Redis</span><i>◆</i><span>Kafka</span><i>◆</i><span>Docker</span><i>◆</i><span>Kubernetes</span><i>◆</i><span>Playwright</span><i>◆</i><span>GitHub Actions</span><i>◆</i>
+      <span>Go</span><i>◆</i><span>Laravel</span><i>◆</i><span>React</span><i>◆</i><span>PostgreSQL</span><i>◆</i><span>Redis</span><i>◆</i><span>Kafka</span><i>◆</i><span>Docker</span><i>◆</i><span>Kubernetes</span><i>◆</i><span>Playwright</span><i>◆</i><span>GitHub Actions</span><i>◆</i>
+    </div>
+  </div>
 
-<section id="work"><h2>Профессиональный путь</h2>
-{{range .Experience}}<div class="job"><time>{{.Period}}</time><div><h3>{{.Role}}{{if .Company}}, {{.Company}}{{end}}</h3><ul>{{range .Bullets}}<li>{{.}}</li>{{end}}</ul></div></div>{{end}}
-</section>
+  <section class="section" id="about">
+    <div class="shell">
+      <div class="section-intro">
+        <div>
+          <p class="kicker reveal">Profile</p>
+          <h2 class="title reveal">Инженерный подход<br>к продуктам</h2>
+        </div>
+        <p class="section-note reveal">Понимаю продукт целиком: пользовательский сценарий, интерфейс, API, данные, тесты, инфраструктуру и эксплуатацию.</p>
+      </div>
+      <p class="about reveal">{{ .About }}</p>
+      {{ if .Location }}<p class="note reveal">{{ .Location }}</p>{{ end }}
 
-{{if .Projects}}<section id="projects"><h2>Проекты</h2>
-{{range .Projects}}<a class="proj" href="{{.URL}}"><h3>{{.Name}}</h3><p>{{.Desc}}</p><div class="tags">{{range .Stack}}<span>{{.}}</span>{{end}}</div></a>{{end}}
-</section>{{end}}
+      <div class="stats-grid">
+        {{ range .Stats }}
+        <div class="stat reveal">
+          <strong>{{ .Value }}</strong>
+          <span>{{ .Label }}</span>
+        </div>
+        {{ end }}
+      </div>
+    </div>
+  </section>
 
-<section><h2>Как я работаю</h2><div class="str">{{range .Strengths}}<div><h3>{{.Title}}</h3><p>{{.Text}}</p></div>{{end}}</div></section>
+  <section class="section" id="skills">
+    <div class="shell">
+      <div class="section-intro">
+        <div>
+          <p class="kicker reveal">Capabilities</p>
+          <h2 class="title reveal">Навыки<br>и технологии</h2>
+        </div>
+        <p class="section-note reveal">Полный стек: от frontend и backend до автоматизации, наблюдаемости и production-инфраструктуры.</p>
+      </div>
 
-<section id="devops"><h2>Этот сайт — тоже проект</h2>
-<div class="pipeline">
-  <div class="stage ok"><code>go vet</code><p>статический анализ</p></div>
-  <div class="stage ok"><code>go test -race</code><p>тесты генератора и валидации данных</p></div>
-  <div class="stage ok"><code>go run .</code><p>Go собирает HTML из data.json</p></div>
-  <div class="stage ok"><code>deploy-pages</code><p>публикация в GitHub Pages</p></div>
-</div>
-<p class="note">Сайт генерирует программа на Go (только стандартная библиотека). Любой пуш в main проходит CI/CD и выкатывается сам. Содержимое лежит в одном JSON-файле, вёрстка не дублируется.</p>
-</section>
+      <div class="skills-grid">
+        {{ range .Skills }}
+        <article class="skill-card reveal" data-tilt-card>
+          <div class="skill-head"><span>{{ .Group }}</span><span>{{ .Note }}</span></div>
+          <ul>
+            {{ range .Items }}
+            <li>
+              <span class="skill-name">{{ .Name }}</span>
+              <span class="dots" role="img" aria-label="{{ .Name }}: уровень {{ .Level }} из 5">
+                {{ if ge .Level 1 }}<i class="on"></i>{{ else }}<i></i>{{ end }}
+                {{ if ge .Level 2 }}<i class="on"></i>{{ else }}<i></i>{{ end }}
+                {{ if ge .Level 3 }}<i class="on"></i>{{ else }}<i></i>{{ end }}
+                {{ if ge .Level 4 }}<i class="on"></i>{{ else }}<i></i>{{ end }}
+                {{ if ge .Level 5 }}<i class="on"></i>{{ else }}<i></i>{{ end }}
+              </span>
+            </li>
+            {{ end }}
+          </ul>
+        </article>
+        {{ end }}
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="cases">
+    <div class="shell">
+      <div class="section-intro">
+        <div>
+          <p class="kicker reveal">Engineering cases</p>
+          <h2 class="title reveal">Задачи,<br>решённые системно</h2>
+        </div>
+        <p class="section-note reveal">Не просто реализация: анализ проблемы, инженерное решение, измеримый результат и влияние на продукт.</p>
+      </div>
+
+      <div class="case-list">
+        {{ range $index, $case := .Cases }}
+        <article class="case reveal" data-tilt-row>
+          <div class="case-index">{{ printf "%02d" (add $index 1) }}</div>
+          <div class="case-body">
+            <h3>{{ $case.Title }}</h3>
+            <p class="problem">{{ $case.Problem }}</p>
+            <div class="case-grid">
+              <div>
+                <h4>Задача</h4>
+                <p>{{ $case.Task }}</p>
+              </div>
+              <div>
+                <h4>Решение</h4>
+                <ul>{{ range $case.Solution }}<li>{{ . }}</li>{{ end }}</ul>
+              </div>
+            </div>
+            <p class="result">{{ $case.Result }}</p>
+            {{ if $case.Metrics }}
+            <div class="metrics">
+              {{ range $case.Metrics }}
+              <div class="metric"><strong>{{ .Value }}</strong><span>{{ .Label }}</span></div>
+              {{ end }}
+            </div>
+            {{ end }}
+          </div>
+          <div class="case-visual" aria-hidden="true">
+            <div class="visual-screen">
+              <div class="visual-line"></div>
+              <div class="visual-line short"></div>
+              <div class="visual-chart"><i></i><i></i><i></i><i></i><i></i></div>
+              <div class="visual-status"><span>System</span><b>OK</b></div>
+            </div>
+          </div>
+        </article>
+        {{ end }}
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="work">
+    <div class="shell">
+      <div class="section-intro">
+        <div>
+          <p class="kicker reveal">Experience</p>
+          <h2 class="title reveal">Опыт<br>и практика</h2>
+        </div>
+        <p class="section-note reveal">Работа с живыми системами, разработка, автоматизация и инженерная эксплуатация.</p>
+      </div>
+
+      <div class="experience-list">
+        {{ range .Experience }}
+        <div class="experience-row reveal">
+          <span class="experience-year">{{ .Period }}</span>
+          <div>
+            <h3>{{ .Role }}{{ if .Company }}, {{ .Company }}{{ end }}</h3>
+            <ul>{{ range .Bullets }}<li>{{ . }}</li>{{ end }}</ul>
+          </div>
+        </div>
+        {{ end }}
+      </div>
+    </div>
+  </section>
+
+  {{ if .Projects }}
+  <section class="section" id="projects">
+    <div class="shell">
+      <div class="section-intro">
+        <div>
+          <p class="kicker reveal">Projects</p>
+          <h2 class="title reveal">Проекты<br>и инструменты</h2>
+        </div>
+        <p class="section-note reveal">Практические системы, автоматизация и инструменты, которые можно посмотреть и повторить.</p>
+      </div>
+      <div class="project-grid">
+        {{ range .Projects }}
+        <a class="project-card reveal" href="{{ .URL }}" data-tilt-card>
+          <div class="project-head"><span>Project</span><span>→</span></div>
+          <h3>{{ .Name }}</h3>
+          <p>{{ .Desc }}</p>
+          <div class="tags">{{ range .Stack }}<span>{{ . }}</span>{{ end }}</div>
+        </a>
+        {{ end }}
+      </div>
+    </div>
+  </section>
+  {{ end }}
+
+  <section class="section" id="strengths">
+    <div class="shell">
+      <div class="section-intro">
+        <div>
+          <p class="kicker reveal">Strengths</p>
+          <h2 class="title reveal">Чем я полезен<br>команде</h2>
+        </div>
+      </div>
+      <div class="strength-grid">
+        {{ range .Strengths }}
+        <div class="strength reveal">
+          <span>◆</span>
+          <h3>{{ .Title }}</h3>
+          <p>{{ .Text }}</p>
+        </div>
+        {{ end }}
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="devops">
+    <div class="shell">
+      <div class="section-intro">
+        <div>
+          <p class="kicker reveal">Delivery pipeline</p>
+          <h2 class="title reveal">От кода<br>до production</h2>
+        </div>
+        <p class="section-note reveal">Сайт собирается генератором на Go, проверяется тестами и автоматически деплоится на GitHub Pages.</p>
+      </div>
+      <div class="pipeline">
+        <div class="stage" data-stage><code>go vet</code><p>Статический анализ кода</p></div>
+        <div class="stage" data-stage><code>go test -race</code><p>Тесты и проверка гонок</p></div>
+        <div class="stage" data-stage><code>go run .</code><p>Сборка HTML из data.json</p></div>
+        <div class="stage" data-stage><code>deploy-pages</code><p>Публикация на GitHub Pages</p></div>
+      </div>
+      <p class="note reveal">Проект написан на Go с использованием только стандартной библиотеки. Контент хранится в JSON, шаблон собирается в статический HTML, а CI/CD автоматизирует проверку и деплой.</p>
+    </div>
+  </section>
+
+  <section class="contact" id="contact">
+    <div class="shell">
+      <p class="kicker reveal">Contact</p>
+      <h2 class="contact-title reveal">Сделаем систему,<br><i>которая работает</i></h2>
+      <div class="contact-actions reveal">
+        {{ range .Links }}<a class="primary-button" href="{{ .URL }}"><span>{{ .Label }}</span></a>{{ end }}
+      </div>
+      <p class="contact-note reveal">Открыт к fullstack-задачам, разработке продуктов, автоматизации и инженерной эксплуатации.</p>
+    </div>
+  </section>
 </main>
 
-<footer>Собрано {{.Built}} · Go + GitHub Actions</footer>
-</div>
+<footer class="site-foot">
+  <div class="shell foot-inner">
+    <span>© {{ .Built }} {{ .Name }}</span>
+    <span>Go · GitHub Actions · GitHub Pages</span>
+    <a href="#top">Наверх ↑</a>
+  </div>
+</footer>
+
 <script src="app.js"></script>
 </body>
 </html>
